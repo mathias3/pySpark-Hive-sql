@@ -1,0 +1,22 @@
+SET hive.exec.dynamic.partition.mode=nonstrict;
+SET hive.exec.dynamic.partition = true; 
+INSERT INTO TABLE partitionedlog PARTITION(log_year, log_month)
+SELECT DAY(log_date),
+       log_time,
+       c_ip,
+       cs_username,
+       s_ip,
+       s_port,
+       cs_method,
+       cs_uri_stem,
+       cs_uri_query,
+       sc_status,
+       sc_bytes,
+       cs_bytes,
+       time_taken, 
+       cs_user_agent,
+       cs_referrer,
+       YEAR(log_date),
+       MONTH(log_date)
+FROM rawlog
+WHERE SUBSTR(log_date, 1, 1) <> '#';

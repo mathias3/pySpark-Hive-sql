@@ -1,0 +1,3 @@
+DROP TABLE webactivity;
+CREATE EXTERNAL TABLE webactivity(log_date STRING, page_hits INT, bytes_recvd INT, bytes_sent INT) ROW FORMAT DELIMITED FIELDS TERMINATED BY ' ' STORED AS TEXTFILE LOCATION '/data/webactivity';
+INSERT INTO TABLE webactivity SELECT log_date, COUNT(*), SUM(sc_bytes), SUM(cs_bytes) FROM cleanlog GROUP BY log_date  ORDER BY log_date;

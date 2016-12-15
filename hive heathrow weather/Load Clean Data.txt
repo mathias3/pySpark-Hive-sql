@@ -1,0 +1,4 @@
+INSERT INTO TABLE cleanlog
+SELECT *
+FROM rawlog
+WHERE SUBSTR(log_date, 1, 1) <> '#';
